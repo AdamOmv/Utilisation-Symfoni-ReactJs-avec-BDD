@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Possessions;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class PossessionController extends AbstractController
 {
@@ -17,44 +20,32 @@ class PossessionController extends AbstractController
     }
 
     #[Route('/monApi/possessions', name: 'get_all_possessions', methods: ['GET'])]
-    public function getAll(): Response
+    public function getAll(ManagerRegistry $doctrine, SerializerInterface $serializer): Response
     {
-        $possessions = $this->getDoctrine()
-            ->getRepository(Possessions::class)
-            ->findAll();
-        $data = [];
+        $possessions = $doctrine->getRepository(Possessions::class)->findAll();
 
-        foreach ($possessions as $possession) {
-            $data[] = [
-                'id' => $possession->getId(),
-                'nom' => $possession->getNom(),
-                'valeur' => $possession->getValeur(),
-                'type' => $possession->getType(),
-            ];
-        }
+        $json = $serializer->serialize($possessions, 'json');
 
-        return $this->json($data);
+        $response = new Response($json);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
     }
 
     #[Route('/monApi/possessions/{id}', name: 'get_one_possession', methods: ['GET'])]
-    public function getOne(int $id): Response
+    public function getOne(int $id, ManagerRegistry $doctrine, SerializerInterface $serializer): Response
     {
-        $possession = $this->getDoctrine()
-            ->getRepository(Possessions::class)
-            ->find($id);
+        $possession = $doctrine->getRepository(Possessions::class)->find($id);
 
         if (!$possession) {
-
             return $this->json('No possession found for id' . $id, 404);
         }
 
-        $data =  [
-            'id' => $possession->getId(),
-            'nom' => $possession->getNom(),
-            'valeur' => $possession->getValeur(),
-            'type' => $possession->getType(),
-        ];
+        $json = $serializer->serialize($possession, 'json');
 
-        return $this->json($data);
+        $response = new Response($json);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
     }
 }

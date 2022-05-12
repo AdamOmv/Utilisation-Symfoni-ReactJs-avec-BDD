@@ -35,7 +35,7 @@ function Tab() {
 function User({ user }) {
 
     var date = new Date(user.birthDate);
-    var formattedDate = format(date, "dd-MM-yyyy")
+    var formattedDate = format(date, "dd-MM-yyyy");
 
     const [Age, setAge] = useState([]);
 

@@ -7,65 +7,6 @@ const urlSearchParams = new URLSearchParams(queryStringUrlId);
 const userId = urlSearchParams.get("id");
 console.log(userId);
 
-/* function PossFetch() {
-    const [loading, setLoading] = possFetch(false)
-    const [items, setImets] = possFetch([])
-    const load = useCallback(async () => {
-        setLoading(true)
-        const response = await fetch("/api/utilisateurs/" + userId)
-            .then((user) => user.json())
-            .then((user) => {
-                setUser(user);
-                /* console.log(user.possessions[1]) 
-                for (let i = 0; i < user.possessions.length; i++) {
-                    fetch(user.possessions[i])
-                        .then((poss) => poss.json())
-                }
-            });
-
-        const responseData = await response.json
-        if (response.ok) {
-            setItems(items => [...items, ...poss])
-            setItems(poss)
-        } else {
-            console.error(responseData)
-        }
-        setLoading(false)
-    }, [])
-
-    return {
-        items,
-        load,
-        loading,
-    }
-} */
-/* const [User, setUser] = useState([]);
-const [loading, setLoading] = useState(false);
-const [Poss, setPoss] = useState([]);
-
-
-const getUser = () => {
-    fetch("/api/utilisateurs/" + userId)
-        .then((user) => user.json())
-        .then((user) => {
-            setUser(user);
-            /* console.log(user.possessions[1]) 
-            for (let i = 0; i < user.possessions.length; i++) {
-                fetch(user.possessions[i])
-                    .then((poss) => poss.json())
-                    .then((poss) => {
-                        setPoss(...Poss, poss);
-                        /* Poss.push(poss) 
-                    });
-            }
-        });
-}
-console.log(Poss)
-
-useEffect(() => {
-    getUser();
-}, []); */
-
 function Tab() {
 
     const { items: Poss, setImems: setPoss, load, loading } = useFetch("/api/possessions/")
@@ -76,20 +17,32 @@ function Tab() {
         loadUsers()
     }, [])
 
-    /*     const [Users, setUser] = useState([]);
-    
-        const getUser = () => {
-            fetch("/monApi/utilisateurs/59")
-                .then((user) => user.json())
-                .then((user) => {
-                    setUser(user);
-                });
-        }
-        console.log(Users)
-    
-        useEffect(() => {
-            getUser();
-        }, []); */
+    /* const [Poss, setPoss] = useState([]);
+
+    const getPoss = () => {
+        fetch("/monApi/possessions")
+            .then((poss) => poss.json())
+            .then((poss) => {
+                setPoss(poss);
+            });
+    }
+    console.log(Poss)
+
+    const [User, setUser] = useState([]);
+
+    const getUser = () => {
+        fetch("/monApi/utilisateurs")
+            .then((user) => user.json())
+            .then((user) => {
+                setUser(user);
+            });
+    }
+    console.log(User)
+
+    useEffect(() => {
+        getPoss()
+        getUser()
+    }, []); */
 
     return (
         <div>

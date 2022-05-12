@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: UtilisateursRepository::class)]
 #[ApiResource]
@@ -15,27 +16,35 @@ class Utilisateurs
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups("show_user", "list_user")]
     private $id;
 
     #[ORM\Column(type: 'string', length: 40)]
+    #[Groups("show_user", "list_user")]
     private $nom;
 
     #[ORM\Column(type: 'string', length: 40)]
+    #[Groups("show_user", "list_user")]
     private $prenom;
 
     #[ORM\Column(type: 'string', length: 40)]
+    #[Groups("show_user", "list_user")]
     private $email;
 
     #[ORM\Column(type: 'string', length: 40)]
+    #[Groups("show_user", "list_user")]
     private $adresse;
 
     #[ORM\Column(type: 'string', length: 40)]
+    #[Groups("show_user", "list_user")]
     private $tel;
 
     #[ORM\OneToMany(mappedBy: 'utilisateurs', targetEntity: Possessions::class, orphanRemoval: true)]
+    #[Groups("show_user", "list_user")]
     private $possessions;
 
     #[ORM\Column(type: 'date')]
+    #[Groups("show_user", "list_user")]
     private $birthDate;
 
 
